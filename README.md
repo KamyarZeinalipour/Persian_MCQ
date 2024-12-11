@@ -128,10 +128,8 @@ To ensure all necessary dependencies are installed, a `requirements.txt` file is
 ### Sample `requirements.txt`:
 
 ```text
-argparse==1.4.0
-pandas==1.5.3
-torch==2.0.1
-transformers==4.35.0
+pandas==2.2.3
+transformers==4.44.0.dev0
 ```
 
 ### Steps to Create or Update `requirements.txt`:
