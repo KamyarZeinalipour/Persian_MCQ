@@ -27,7 +27,7 @@ Inspired by the Agent Instruct framework and **GPT-4**, we created a dataset by 
   - [Input File Format](#input-file-format)
   - [Output](#output)
 - [Notes](#notes)
-- [Building the `requirements.txt` File](#building-the-requirementstxt-file)
+- [Installing Dependencies Using `requirements.txt`](#building-the-requirementstxt-file)
 - [License](#license)
 
 ## Requirements
@@ -121,33 +121,7 @@ The script generates a CSV file containing the original prompts and the generate
 - **Internet Connection**: A stable internet connection is required to download models from Hugging Face's model hub if they are not present locally.
 - **Customization**: Feel free to adjust parameters like `max_new_tokens` in the script for finer control over the output length.
 
-## Building the `requirements.txt` File
 
-To ensure all necessary dependencies are installed, a `requirements.txt` file is provided. Below are instructions on how to create or update it.
-
-### Sample `requirements.txt`:
-
-```text
-pandas==2.2.3
-transformers==4.44.0.dev0
-```
-
-### Steps to Create or Update `requirements.txt`:
-
-1. **Manual Creation**:
-
-   - Create a file named `requirements.txt`.
-   - List all the required packages with their versions.
-
-2. **Automatic Generation**:
-
-   If you've installed packages in your virtual environment, you can generate the file automatically:
-
-   ```bash
-   pip freeze > requirements.txt
-   ```
-
-   **Note**: This may include more packages than necessary. It's a good practice to review and edit the file to include only the required dependencies.
 
 ### Installing Dependencies Using `requirements.txt`:
 
