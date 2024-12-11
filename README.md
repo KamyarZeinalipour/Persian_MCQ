@@ -47,7 +47,7 @@ Inspired by the Agent Instruct framework and **GPT-4**, we created a dataset by 
   - CUDA-compatible GPU (recommended for faster processing and to handle larger models)
   - At least 16 GB of RAM (more may be required depending on the model)
 - **Dependencies**:
-  - See [`requirements.txt`](#building-the-requirementstxt-file) for a list of Python packages needed.
+  - See [`requirements.txt`](requirements.txt) for a list of Python packages needed.
 
 ## Installation
 
