@@ -1,22 +1,29 @@
-import pandas as pd
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import argparse
+
+# Prompt to be used
+PROMPT = '''As an Educational Assistant, create a multiple-choice question in Persian from a given text, ensuring that the question has one correct answer and three plausible distractors. Follow these guidelines:
+1- Identify key concepts and details.
+2- Use clear, concise, grammatically correct Persian.
+3- Correct answers must be directly from the text.
+4- Provide a question in the list format as follows:
+Question ? الف. Correct answer (پاسخ صحیح) ب. Incorrect answer (پاسخ غلط) ج. Incorrect answer (پاسخ غلط) د. Incorrect answer (پاسخ غلط)''' + '\n\nText: '
 
 # Model-specific configurations
 MODEL_CONFIGS = {
     "PMCQ-Gemma2-9b": {
         "path": "Kamyar-zeinalipour/PMCQ-Gemma2-9b",
-        "format_row": lambda row: f'<bos><start_of_turn>user\n{row["text"]}\n<start_of_turn>model\n',
+        "format_row": lambda row: f'<bos><start_of_turn>user\n{PROMPT}{row["text"]}\n<start_of_turn>model\n',
         "extract_text": lambda text: text.split('<start_of_turn>model\n')[1].split('<end_of_turn>')[0] if '<start_of_turn>model\n' in text and '<end_of_turn>' in text else None
     },
     "PMCQ-Llama3.1-8b": {
         "path": "Kamyar-zeinalipour/PMCQ-Llama3.1-8b",
-        "format_row": lambda row: f'<|begin_of_text|><|start_header_id|>system<|end_header_id|>\nYou are helpful assistant\n<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{row["text"]} <|eot_id|><|start_header_id|>assistant<|end_header_id|>',
+        "format_row": lambda row: f'<|begin_of_text|><|start_header_id|>system<|end_header_id|>\nYou are helpful assistant\n<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{PROMPT}{row["text"]} <|eot_id|><|start_header_id|>assistant<|end_header_id|>',
         "extract_text": lambda text: text.split('<|end_header_id|>\n\n')[2].split('<|end_of_text|>')[0] if text.count('<|end_header_id|>\n\n') > 1 else None
     },
     "PMCQ-Mistral-7B": {
         "path": "Kamyar-zeinalipour/PMCQ-Mistral-7B",
-        "format_row": lambda row: f'<s>[INST] {row["text"]} [/INST] ',
+        "format_row": lambda row: f'<s>[INST] {PROMPT}{row["text"]} [/INST] ',
         "extract_text": lambda text: text.split('[/INST]')[1].split('</s>')[0] if '[/INST]' in text and '</s>' in text else None
     }
 }
