@@ -5,17 +5,17 @@ import argparse
 # Model-specific configurations
 MODEL_CONFIGS = {
     "PMCQ-Gemma2-9b": {
-        "path": "Kamyar-zeinalipour/gemma2_9b_LORA_Persian_MCQ_16_32_v1",
+        "path": "Kamyar-zeinalipour/PMCQ-Gemma2-9b",
         "format_row": lambda row: f'<bos><start_of_turn>user\n{row["text"]}\n<start_of_turn>model\n',
         "extract_text": lambda text: text.split('<start_of_turn>model\n')[1].split('<end_of_turn>')[0] if '<start_of_turn>model\n' in text and '<end_of_turn>' in text else None
     },
     "PMCQ-Llama3.1-8b": {
-        "path": "Kamyar-zeinalipour/Meta_Llama3_LORA_Persian_MCQ_16_32_v1",
+        "path": "Kamyar-zeinalipour/PMCQ-Llama3.1-8b",
         "format_row": lambda row: f'<|begin_of_text|><|start_header_id|>system<|end_header_id|>\nYou are helpful assistant\n<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{row["text"]} <|eot_id|><|start_header_id|>assistant<|end_header_id|>',
         "extract_text": lambda text: text.split('<|end_header_id|>\n\n')[2].split('<|end_of_text|>')[0] if text.count('<|end_header_id|>\n\n') > 1 else None
     },
     "PMCQ-Mistral-7B": {
-        "path": "Kamyar-zeinalipour/mistral_7b_LORA_Persian_MCQ_16_32_v1",
+        "path": "Kamyar-zeinalipour/PMCQ-Mistral-7B",
         "format_row": lambda row: f'<s>[INST] {row["text"]} [/INST] ',
         "extract_text": lambda text: text.split('[/INST]')[1].split('</s>')[0] if '[/INST]' in text and '</s>' in text else None
     }
