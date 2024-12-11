@@ -44,8 +44,8 @@ Inspired by the Agent Instruct framework and **GPT-4**, we created a dataset by 
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/yourusername/PersianMCQ-Instruct.git
-   cd PersianMCQ-Instruct
+   git clone https://github.com/yourusername/Persian_MCQ.git
+   cd Persian_MCQ
    ```
 
 2. **Create a Virtual Environment (Recommended)**:
@@ -72,7 +72,7 @@ The script can be executed from the command line with various arguments to custo
 **Basic Command Structure**:
 
 ```bash
-python generate_persian_mcq.py --model-name <MODEL_NAME> --input-file <INPUT_CSV> --output-file <OUTPUT_CSV> [--temperature <TEMPERATURE>]
+python main.py --model-name <MODEL_NAME> --input-file <INPUT_CSV> --output-file <OUTPUT_CSV> [--temperature <TEMPERATURE>]
 ```
 
 ### Arguments
