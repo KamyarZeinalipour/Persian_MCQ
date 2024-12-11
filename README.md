@@ -87,7 +87,7 @@ python main.py --model-name <MODEL_NAME> --input-file <INPUT_CSV> --output-file 
 ### Example Command
 
 ```bash
-python generate_persian_mcq.py \
+python main.py \
   --model-name PMCQ-Gemma2-9b \
   --input-file data/input_prompts.csv \
   --output-file data/generated_mcqs.csv \
