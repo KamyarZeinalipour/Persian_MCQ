@@ -21,14 +21,24 @@ Inspired by the Agent Instruct framework and **GPT-4**, we created a dataset by 
 
 ## Table of Contents
 
+- [Overview](#overview)
+- [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
+  - [Clone the Repository](#clone-the-repository)
+  - [Create a Virtual Environment](#create-a-virtual-environment)
+  - [Install the Required Packages](#install-the-required-packages)
+  - [Download the Models](#download-the-models)
 - [Usage](#usage)
+  - [Basic Command Structure](#basic-command-structure)
+  - [Arguments](#arguments)
+  - [Example Command](#example-command)
   - [Input File Format](#input-file-format)
   - [Output](#output)
 - [Notes](#notes)
-- [Installing Dependencies Using `requirements.txt`](#building-the-requirementstxt-file)
+- [Installing Dependencies Using `requirements.txt`](#installing-dependencies-using-requirementstxt)
 - [License](#license)
+- [Reference](#reference)
 
 ## Requirements
 
