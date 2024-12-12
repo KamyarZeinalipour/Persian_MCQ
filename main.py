@@ -77,7 +77,7 @@ def main(args):
             generated_text = model_config["extract_text"](response)
             print('Index:', index)
             print('Input text:', row['text'])
-            print('Index:',row.index ,'Generated Persian MCQ:  ', generated_text)
+            print('Generated Persian MCQ:  ', generated_text)
 
             outputs.append({
                 'text': row['text'],
