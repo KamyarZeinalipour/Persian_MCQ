@@ -1,5 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import argparse
+import pandas as pd
 
 # Prompt to be used
 PROMPT = '''As an Educational Assistant, create a multiple-choice question in Persian from a given text, ensuring that the question has one correct answer and three plausible distractors. Follow these guidelines:
@@ -66,7 +67,7 @@ def main(args):
     # Initialize list to store outputs
     outputs = []
 
-    for _, row in df.iterrows():
+    for index, row in df.iterrows():
         # Apply the formatting template to the 'text' column
         prompt = model_config["format_row"](row)
 
@@ -74,6 +75,9 @@ def main(args):
             # Get generated response
             response = get_code_completion(prompt, model, tokenizer, args.temperature)
             generated_text = model_config["extract_text"](response)
+            print('Index:', index)
+            print('Input text:', row['text'])
+            print('Index:',row.index ,'Generated Persian MCQ:  ', generated_text)
 
             outputs.append({
                 'text': row['text'],
@@ -92,7 +96,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate text using a language model.')
     parser.add_argument('--model-name', type=str, required=True, help='Pretrained model name. Use "PMCQ-Gemma2-9b", "PMCQ-Llama3.1-8b", or "PMCQ-Mistral-7B"')
     parser.add_argument('--input-file', type=str, required=True, help='Path to the input CSV file')
-    parser.add_argument('--output-file', type=str, required=True, help='Path to save the output CSV file')
+    parser.add_argument('--output-file', type=str, default= 'output.csv', help='Path to save the output CSV file')
     parser.add_argument('--temperature', type=float, default=0.1, help='Temperature for text generation')
     
     args = parser.parse_args()
