@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use PersianMCQ-Instruct, please cite the paper below."
+title: "PersianMCQ-Instruct: A Comprehensive Resource for Generating Multiple-Choice Questions in Persian"
+repository-code: "https://github.com/KamyarZeinalipour/Persian_MCQ"
+license: MIT
+authors:
+  - {family-names: Zeinalipour, given-names: Kamyar}
+  - {family-names: Jamshidi, given-names: Neda}
+  - {family-names: Akbari, given-names: Fahimeh}
+  - {family-names: Maggini, given-names: Marco}
+  - {family-names: Bianchini, given-names: Monica}
+  - {family-names: Gori, given-names: Marco}
+preferred-citation:
+  type: conference-paper
+  title: "PersianMCQ-Instruct: A Comprehensive Resource for Generating Multiple-Choice Questions in Persian"
+  authors:
+    - {family-names: Zeinalipour, given-names: Kamyar}
+    - {family-names: Jamshidi, given-names: Neda}
+    - {family-names: Akbari, given-names: Fahimeh}
+    - {family-names: Maggini, given-names: Marco}
+    - {family-names: Bianchini, given-names: Monica}
+    - {family-names: Gori, given-names: Marco}
+  collection-title: "Proceedings of the First Workshop on Language Models for Low-Resource Languages (LoResLM 2025)"
+  publisher: {name: "Association for Computational Linguistics"}
+  year: 2025
+  url: "https://aclanthology.org/2025.loreslm-1.27/"

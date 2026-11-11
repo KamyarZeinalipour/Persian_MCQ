@@ -1,79 +1,50 @@
 # PersianMCQ-Instruct
 
-**PersianMCQ-Instruct** is a comprehensive resource that includes datasets and advanced models for generating multiple-choice questions (MCQs) in standard Iranian Persian—a low-resource language spoken by over 80 million people. This project provides valuable tools for researchers and educators, aiming to enhance Persian-language educational technology.
+**Multiple-choice question generation in Persian**
 
-## Overview
+[![Paper](https://img.shields.io/badge/LoResLM_2025-paper-b31b1b)](https://aclanthology.org/2025.loreslm-1.27/)
+[![Dataset](https://img.shields.io/badge/%F0%9F%A4%97_Dataset-PersianMCQ--instruct-yellow)](https://huggingface.co/datasets/Kamyar-zeinalipour/PersianMCQ-instruct)
+[![Models](https://img.shields.io/badge/%F0%9F%A4%97_Collection-3_models-orange)](https://huggingface.co/collections/Kamyar-zeinalipour/persianmcq-instruct-loreslm-2025-6af481273fff746c25e21f62)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE.txt)
 
-We present three state-of-the-art models for Persian MCQ generation:
+PersianMCQ-Instruct is a dataset and a set of fine-tuned models for generating multiple-choice
+questions (MCQs) in standard Iranian Persian. Following the AgentInstruct approach, GPT-4o
+generated and refined three MCQs for each of more than 4,000 Persian Wikipedia pages, giving
+12,476 questions. Fine-tuning Gemma-2, Llama-3.1 and Mistral on this data sharply improves the
+questions they write. This repository accompanies the paper
+[*PersianMCQ-Instruct: A Comprehensive Resource for Generating Multiple-Choice Questions in
+Persian*](https://aclanthology.org/2025.loreslm-1.27/) (LoResLM 2025).
 
-- **PMCQ-Gemma2-9b**
-- **PMCQ-Llama3.1-8b**
-- **PMCQ-Mistral-7B**
+| Resource | |
+|---|---|
+| [PersianMCQ-instruct](https://huggingface.co/datasets/Kamyar-zeinalipour/PersianMCQ-instruct) | The dataset: Persian passages with generated and refined MCQs |
+| [PMCQ-Gemma2-9b](https://huggingface.co/Kamyar-zeinalipour/PMCQ-Gemma2-9b) | Gemma-2-9B-it fine-tuned with LoRA |
+| [PMCQ-Llama3.1-8b](https://huggingface.co/Kamyar-zeinalipour/PMCQ-Llama3.1-8b) | Llama-3.1-8B-Instruct fine-tuned with LoRA |
+| [PMCQ-Mistral-7B](https://huggingface.co/Kamyar-zeinalipour/PMCQ-Mistral-7B) | Mistral-7B-Instruct-v0.3 fine-tuned with LoRA |
+| [HumanAnnotation-UI-PMCQ](https://github.com/KamyarZeinalipour/HumanAnnotation-UI-PMCQ) | Human-evaluation protocol |
 
-Inspired by the Agent Instruct framework and **GPT-4**, we created a dataset by curating over 4,000 unique Persian Wikipedia pages and generating three MCQs per page, resulting in a total of over 12,000 questions. Both human evaluations and model fine-tuning were conducted to ensure dataset quality, showing substantial performance improvements in Persian MCQ generation.
+## Results
 
-## Features
+Human ratings of 200 generated questions per model (A = 5 … E = 1; Table 3 of the paper):
 
-- **Multiple Pre-trained Models**: Choose from three advanced models fine-tuned for Persian MCQ generation.
-- **Customizable Generation Parameters**: Adjust settings like temperature to control the creativity of the generated content.
-- **Command-Line Interface**: Easily run the script with different parameters through a simple CLI.
-- **Supports Persian Language**: Tailored for standard Iranian Persian, catering to a significant linguistic community.
+| Model | Base | Fine-tuned (PMCQ) |
+|---|---:|---:|
+| Gemma-2-9B-it | 2.72 | **2.78** |
+| Llama-3.1-8B-Instruct | 3.31 | **4.51** |
+| Mistral-7B-Instruct-v0.3 | 1.30 | **4.32** |
+| PersianMCQ-Instruct (GPT-4o reference) | | 4.75 |
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-  - [Clone the Repository](#clone-the-repository)
-  - [Create a Virtual Environment](#create-a-virtual-environment)
-  - [Install the Required Packages](#install-the-required-packages)
-  - [Download the Models](#download-the-models)
-- [Usage](#usage)
-  - [Basic Command Structure](#basic-command-structure)
-  - [Arguments](#arguments)
-  - [Example Command](#example-command)
-  - [Input File Format](#input-file-format)
-  - [Output](#output)
-- [Notes](#notes)
-- [Installing Dependencies Using `requirements.txt`](#installing-dependencies-using-requirementstxt)
-- [License](#license)
-- [Reference](#reference)
-
-## Requirements
-
-- **Python**:  Python 3.7 or higher
-- **Hardware**:
-  - CUDA-compatible GPU (recommended for faster processing and to handle larger models)
-  - At least 16 GB of RAM (more may be required depending on the model)
-- **Dependencies**:
-  - See [`requirements.txt`](requirements.txt) for a list of Python packages needed.
+BERTScore F1 between generated and reference questions (Table 2): Gemma 0.888 → **0.903**,
+Llama 0.881 → **0.905**, Mistral 0.874 → **0.904**.
 
 ## Installation
 
-1. **Clone the Repository**:
-
-   ```bash
-   git clone https://github.com/yourusername/Persian_MCQ.git
-   cd Persian_MCQ
-   ```
-
-2. **Create a Virtual Environment (Recommended)**:
-
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   ```
-
-3. **Install the Required Packages**:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Download the Models**:
-
-   The models will be automatically downloaded the first time you run the script. Ensure you have a stable internet connection.
+```bash
+git clone https://github.com/KamyarZeinalipour/Persian_MCQ.git
+cd Persian_MCQ
+pip install -r requirements.txt
+huggingface-cli login   # the base models are gated: accept their licenses on Hugging Face first
+```
 
 ## Usage
 
@@ -131,38 +102,48 @@ The script generates a CSV file containing the original prompts and the generate
 - **Internet Connection**: A stable internet connection is required to download models from Hugging Face's model hub if they are not present locally.
 - **Customization**: Feel free to adjust parameters like `max_new_tokens` in the script for finer control over the output length.
 
-
-
-### Installing Dependencies Using `requirements.txt`:
+## Training
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements-train.txt
+scripts/train_llama3.sh      # also train_gemma2.sh, train_mistral.sh
+```
+
+The models were fine-tuned on the `Persian_MCQ_DB_*` datasets (the PersianMCQ-Instruct questions in
+each model's chat format; 12,000 training and 476 test items) with LoRA r = 16, α = 32, dropout 0.1
+on all attention and MLP projections plus the embeddings and LM head; 3 epochs, AdamW, learning
+rate 1e-4 with cosine decay, weight decay 1e-4; 4 sequences per GPU × 4 accumulation steps, up to
+3,500 tokens; bf16, DeepSpeed, Flash Attention 2, seed 100.
+
+## Citation
+
+```bibtex
+@inproceedings{zeinalipour-etal-2025-persianmcq,
+    title = "{P}ersian{MCQ}-Instruct: A Comprehensive Resource for Generating Multiple-Choice Questions in {P}ersian",
+    author = "Zeinalipour, Kamyar  and
+      Jamshidi, Neda  and
+      Akbari, Fahimeh  and
+      Maggini, Marco  and
+      Bianchini, Monica  and
+      Gori, Marco",
+    editor = "Hettiarachchi, Hansi  and
+      Ranasinghe, Tharindu  and
+      Rayson, Paul  and
+      Mitkov, Ruslan  and
+      Gaber, Mohamed  and
+      Premasiri, Damith  and
+      Tan, Fiona Anting  and
+      Uyangodage, Lasitha",
+    booktitle = "Proceedings of the First Workshop on Language Models for Low-Resource Languages",
+    month = jan,
+    year = "2025",
+    address = "Abu Dhabi, United Arab Emirates",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.loreslm-1.27/",
+    pages = "344--372"
+}
 ```
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE.txt).
-
----
-
-We hope that **PersianMCQ-Instruct** serves as a valuable resource in advancing educational technology and research for the Persian language community.
-
-For any questions or contributions, please open an issue or submit a pull request.
-
----
-
-# Reference
-
-This project is based on the research presented in the paper:
-
-> **Title**: PersianMCQ-Instruct: A Resource for Persian Multiple Choice Question Generation
->
-> **Abstract**:
->
-> We present **PersianMCQ-Instruct**, a comprehensive resource comprising a dataset and advanced models for generating multiple-choice questions (MCQs) in standard Iranian Persian, a low-resource language spoken by over 80 million people. This resource includes three state-of-the-art models for Persian MCQ generation: **PMCQ-Gemma2-9b**, **PMCQ-Llama3.1-8b**, and **PMCQ-Mistral-7B**. Inspired by the Agent Instruct framework and **GPT-4**, we created the dataset by curating over 4,000 unique Persian Wikipedia pages, generating three MCQs per page for a total of over 12,000 questions.
->
-> To ensure the quality of the dataset, we conducted both human evaluations and model fine-tuning, which showed substantial performance improvements in the Persian MCQ generation. The dataset and models are publicly available, providing valuable tools for researchers and educators, with a particular impact on enhancing Persian-language educational technology.
-
----
-
-**Note**: The models and datasets are intended for research and educational purposes. Always ensure compliance with local regulations and ethical guidelines when using AI models and data.
+Code: [MIT](LICENSE.txt). The models follow the licenses of their base models.
