@@ -115,6 +115,42 @@ on all attention and MLP projections plus the embeddings and LM head; 3 epochs, 
 rate 1e-4 with cosine decay, weight decay 1e-4; 4 sequences per GPU × 4 accumulation steps, up to
 3,500 tokens; bf16, DeepSpeed, Flash Attention 2, seed 100.
 
+<!-- hf-usage -->
+## Load the models and data from Hugging Face
+
+Everything released with the paper is in the Hugging Face collection [PersianMCQ-Instruct (LoResLM 2025)](https://huggingface.co/collections/Kamyar-zeinalipour/persianmcq-instruct-loreslm-2025-6af481273fff746c25e21f62).
+
+```python
+from datasets import load_dataset
+
+data = load_dataset("Kamyar-zeinalipour/PersianMCQ-instruct")
+data = load_dataset("Kamyar-zeinalipour/Persian_MCQ_DB_Llama3")
+data = load_dataset("Kamyar-zeinalipour/Persian_MCQ_DB_Mistral")
+data = load_dataset("Kamyar-zeinalipour/Persian_MCQ_DB__Gemma")
+```
+
+The fine-tuned models are LoRA adapters. `AutoPeftModelForCausalLM` downloads the base model named in the adapter's configuration and applies the adapter on top of it:
+
+```python
+import torch
+from peft import AutoPeftModelForCausalLM
+from transformers import AutoTokenizer
+
+repo = "Kamyar-zeinalipour/PMCQ-Llama3.1-8b"
+tokenizer = AutoTokenizer.from_pretrained("Kamyar-zeinalipour/PMCQ-Llama3.1-8b")
+model = AutoPeftModelForCausalLM.from_pretrained(repo, torch_dtype=torch.bfloat16, device_map="auto")
+```
+
+| Adapter | Base model |
+|---|---|
+| [PMCQ-Llama3.1-8b](https://huggingface.co/Kamyar-zeinalipour/PMCQ-Llama3.1-8b) | [meta-llama/Meta-Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct) |
+| [PMCQ-Mistral-7B](https://huggingface.co/Kamyar-zeinalipour/PMCQ-Mistral-7B) | [mistralai/Mistral-7B-Instruct-v0.3](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3) |
+| [PMCQ-Gemma2-9b](https://huggingface.co/Kamyar-zeinalipour/PMCQ-Gemma2-9b) | [google/gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it) |
+
+Some base models (Llama, Gemma, Mistral Small/Nemo) are gated: accept their licence on their Hugging Face page and log in with `huggingface-cli login` before loading.
+
+<!-- /hf-usage -->
+
 ## Citation
 
 ```bibtex
